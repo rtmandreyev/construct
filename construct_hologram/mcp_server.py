@@ -13,6 +13,7 @@ only on the JSON in the request.
 
 import base64
 import json
+import math
 import sys
 
 from . import diagnose, export, hologram, params, product, scene, tiers, __version__
@@ -20,6 +21,7 @@ from . import diagnose, export, hologram, params, product, scene, tiers, __versi
 PROTOCOL_VERSION = "2025-11-25"
 MAX_REQUEST_BYTES = 1024 * 1024
 MAX_RESPONSE_BYTES = 4 * 1024 * 1024
+RESPONSE_BUDGET = MAX_RESPONSE_BYTES - 64 * 1024   # a print's answer, with room for the JSON-RPC envelope
 
 TOOLS = [
     {
@@ -221,6 +223,26 @@ def _valid_id(v):
     return isinstance(v, (str, int))
 
 
+def _response_bytes(result):
+    return len(json.dumps({"jsonrpc": "2.0", "id": 0, "result": result}, separators=(",", ":")).encode("utf-8"))
+
+
+def _print_result(p, fmt, finest=None):
+    """A print as the tool's answer. `finest`: the voxel asked for, when a coarser one was used so the answer fits
+    the response limit; the report and the notes say so."""
+    from . import printing
+    report = dict(p["report"])
+    notes = printing.notes(report)
+    if finest is not None:
+        report["detail_for_response_mm"] = {"used": report["detail_mm"], "finest": finest,
+                                            "limit_mb": MAX_RESPONSE_BYTES // 1048576}
+        notes.insert(0, "voxel %g mm, not %g: the finest whose answer fits this server's %d MB limit; the command "
+                        "line (construct print) writes it at %g mm" % (report["detail_mm"], finest,
+                                                                       MAX_RESPONSE_BYTES // 1048576, finest))
+    data = printing.to_3mf(p) if fmt == "3mf" else printing.to_stl(p)
+    return _tool_result({fmt + "_base64": base64.b64encode(data).decode("ascii"), "report": report, "notes": notes})
+
+
 def _tool_result(payload, is_error=False):
     text = json.dumps(payload, separators=(",", ":"))
     result = {"content": [{"type": "text", "text": text}]}
@@ -358,12 +380,25 @@ def _call_v2(name, args):
                 if pr is None:
                     raise printing.PrintError("printer: one of " + ", ".join(printing.PRINTERS))
                 kw = dict({"detail": pr["detail"], "wall": pr["wall"]}, bed=pr["bed"], coarsen=True, **kw)
-            p = printing.make(built, lines=args.get("lines", "none"), **kw)
+            lines = args.get("lines", "none")
+            p = printing.make(built, lines=lines, **kw)
+            result = _print_result(p, fmt)
+            # No detail asked for: a voxel coarse enough for the answer to fit the response limit, rather than an
+            # answer refused for its size. The command line writes the file at the finest detail, with no limit.
+            finest = p["report"]["detail_mm"]
+            tries = 0
+            while "detail" not in args and not kw.get("exact") and tries < 4:
+                size = _response_bytes(result)
+                if size <= RESPONSE_BUDGET:
+                    break
+                step = p["report"]["detail_mm"]
+                detail = math.ceil(step * math.sqrt(size / RESPONSE_BUDGET) * 1.05 * 20) / 20.0   # whole 0.05 mm
+                p = printing.make(built, lines=lines, **dict(kw, detail=max(detail, step + 0.05)))
+                result = _print_result(p, fmt, finest)
+                tries += 1
         except (printing.PrintError, scene.SceneError, TypeError) as exc:
             return _tool_result({"error": str(exc)}, is_error=True)
-        data = printing.to_3mf(p) if fmt == "3mf" else printing.to_stl(p)
-        return _tool_result({fmt + "_base64": base64.b64encode(data).decode("ascii"), "report": p["report"],
-                             "notes": printing.notes(p["report"])})
+        return result
     return _tool_result(scene.compile_scene(built))
 
 
@@ -451,7 +486,8 @@ def _emit(obj):
             "jsonrpc": "2.0",
             "id": obj.get("id"),
             "error": {"code": -32603, "message": "response too large: %.1f MB, the limit is %d MB. A print or a model this "
-                      "large: make it smaller (size, scale, a coarser detail) or write it with the command line "
+                      "large: make it smaller (size, scale, a coarser detail; a print given no detail takes the finest "
+                      "that fits) or write it with the command line "
                       "(construct print / construct export), which has no limit" % (
                           len(data.encode("utf-8")) / 1048576.0, MAX_RESPONSE_BYTES // 1048576)},
         }, separators=(",", ":"))

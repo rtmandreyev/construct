@@ -79,6 +79,8 @@ As an MCP server:
 {"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}
 ```
 
+Or, in Claude Desktop, the `.mcpb` file from the [latest release](https://github.com/rtmandreyev/construct/releases/latest): the same server, installed with a double-click.
+
 ## Tests
 
 Over 500 tests, standard library only, no network and no model, run in CI on macOS, Linux and Windows. They compile

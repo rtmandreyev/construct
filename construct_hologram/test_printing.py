@@ -152,6 +152,44 @@ class Print(unittest.TestCase):
         self.assertIn("3D/3dmodel.model", z.namelist())
         self.assertTrue(lines[2]["result"]["isError"])
 
+    def test_mcp_print_without_a_detail_fits_the_response(self):
+        # 1.3.0 refused the starter book's default print (4.4 MB against a 4 MB limit): with no detail asked for,
+        # the voxel is widened until the answer fits, and the report and the notes say so
+        from . import mcp_server
+        doc = scene_of(box("block", [0.1, 0.05, 0.04], [0, 0.025, 0]))
+        budget = mcp_server.RESPONSE_BUDGET
+        try:
+            mcp_server.RESPONSE_BUDGET = 150 * 1024
+            for fmt in ("3mf", "stl"):
+                res = mcp_server._call_tool("construct_print", {"document": doc, "size": 60, "format": fmt})
+                self.assertNotIn("isError", res)
+                self.assertLessEqual(mcp_server._response_bytes(res), mcp_server.RESPONSE_BUDGET)
+                rep = res["structuredContent"]["report"]
+                self.assertGreater(rep["detail_mm"], printing.DETAIL_MM)
+                self.assertEqual(rep["detail_for_response_mm"]["finest"], printing.DETAIL_MM)
+                self.assertTrue(rep["watertight"])
+                self.assertIn("command line", res["structuredContent"]["notes"][0])
+            asked = mcp_server._call_tool("construct_print", {"document": doc, "size": 60, "detail": 0.4})
+            self.assertEqual(asked["structuredContent"]["report"]["detail_mm"], 0.4)   # a detail asked for is kept
+            self.assertNotIn("detail_for_response_mm", asked["structuredContent"]["report"])
+            small = mcp_server._call_tool("construct_print", {"document": doc, "size": 8})
+            self.assertEqual(small["structuredContent"]["report"]["detail_mm"], printing.DETAIL_MM)  # fits: as asked
+        finally:
+            mcp_server.RESPONSE_BUDGET = budget
+
+    def test_mcp_starter_book_prints_with_the_defaults(self):
+        msgs = [{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}},
+                {"jsonrpc": "2.0", "id": 2, "method": "tools/call",
+                 "params": {"name": "construct_params_template", "arguments": {"archetype": "book", "variant": "paperback"}}}]
+        run = lambda m: [json.loads(x) for x in subprocess.run(
+            [sys.executable, "-m", __package__ + ".mcp_server"], cwd=HERE.parent, capture_output=True, text=True,
+            input="".join(json.dumps(x) + "\n" for x in m)).stdout.splitlines() if x.strip()]
+        book = json.loads(run(msgs)[1]["result"]["content"][0]["text"])
+        out = run(msgs[:1] + [{"jsonrpc": "2.0", "id": 3, "method": "tools/call",
+                               "params": {"name": "construct_print", "arguments": {"document": book}}}])[1]
+        self.assertNotIn("error", out)
+        self.assertTrue(out["result"]["structuredContent"]["report"]["watertight"])
+
     @unittest.skipUnless(os.environ.get("CONSTRUCT_PRUSASLICER"), "set CONSTRUCT_PRUSASLICER to the PrusaSlicer binary")
     def test_prusaslicer_agrees(self):
         with tempfile.TemporaryDirectory() as tmp:

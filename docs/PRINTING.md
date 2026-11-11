@@ -48,7 +48,10 @@ wrote fj62.3mf: 44.9 x 101.3 x 40.5 mm at 1:48, 280208 triangles
 ```
 
 The exit status is 0 for a watertight print. Agents use the same print through the skill, and MCP
-clients through the `construct_print` tool (the file comes back as base64, with the report).
+clients through the `construct_print` tool (the file comes back as base64, with the report). An MCP answer
+has a 4 MB limit: given no `detail`, the tool takes the finest voxel whose file fits it, and its report and notes
+say which (`detail_for_response_mm`); a `detail` asked for is kept, and a file too large for the answer is
+refused with a way out. The command line writes the file at any detail.
 
 ## How the print is made
 

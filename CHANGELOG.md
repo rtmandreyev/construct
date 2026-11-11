@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.1 — 2026-11-12
+
+- **The MCP server's print fits its answer.** In 1.3.0, `construct_print` with its defaults refused the starter
+  book: its 3MF made a 4.4 MB answer against the server's 4 MB limit. Given no `detail`, the tool now takes the
+  finest voxel whose file fits (the book prints at 0.45 mm, the FJ62 at 0.6 mm), and its report
+  (`detail_for_response_mm`) and first note say so and that the command line writes it at 0.4 mm. A `detail` asked
+  for is kept as before, and the refusal now says that leaving it out picks one that fits.
+- **The MCP server as a bundle for Claude Desktop.** Each release carries `construct-mcp-<version>.mcpb`, the MCP
+  server as Claude Desktop installs it with a double-click, and the official MCP Registry lists it as
+  `io.github.rtmandreyev/construct`. `scripts/build_mcpb.py` builds the bundle and the registry's `server.json`
+  reproducibly, so the hash in the entry holds for the attached file ([PUBLISHING.md](PUBLISHING.md)).
+
 ## 1.3.0 — 2026-11-10
 
 **Worlds:** whole constructs placed together in one scene. A room, a street, a city or a game map, made in Hermes

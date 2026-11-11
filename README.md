@@ -286,6 +286,7 @@ Then add the skill to your agent, or use Construct directly:
 | Hermes, the plugin | `hermes plugins install rtmandreyev/construct#hermes/construct`: thirteen tools, the construct live in the chat, worlds, 3D models, kits and NetLogo runs in Hermes Desktop ([Construct for Hermes](hosts/hermes/construct/README.md)) |
 | Hermes, the skill alone | `hermes skills install rtmandreyev/construct/skills/construct`, or copy `dist/hermes/construct` into `~/.hermes/skills/` |
 | Any MCP client | Add `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}` |
+| Claude Desktop, the MCP server | Open the `.mcpb` file from the [latest release](https://github.com/rtmandreyev/construct/releases/latest): Claude Desktop installs it with a double-click (Python 3.10 or newer) |
 | Any OpenAI-compatible model | `python3 construct_hologram/cli.py author "..." --base-url ... --model ... --key-env ... --out scene.json` |
 | By hand | The command line below; no model needed |
 | Blender | `python3 scripts/build_blender_extension.py`, then **Edit → Preferences → Get Extensions → Install from Disk** with the zip in `dist/` |

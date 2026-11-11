@@ -108,6 +108,8 @@ server to your agent's configuration:
 {"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}
 ```
 
+In Claude Desktop, open the `.mcpb` file from the [latest release](https://github.com/rtmandreyev/construct/releases/latest) instead: it installs the same server with a double-click.
+
 The tools only read the JSON they are given; they never touch your files or the network. The list
 of tools is in [DEVELOPMENT.md](DEVELOPMENT.md#mcp-tools).
 

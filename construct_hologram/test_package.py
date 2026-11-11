@@ -373,6 +373,68 @@ class Distributions(unittest.TestCase):
                           or "/skill/" in n or "/examples/" in n], [])
 
 
+class McpBundle(unittest.TestCase):
+    """scripts/build_mcpb.py: the MCP server as a bundle Claude Desktop installs, and the registry entry for it."""
+
+    @classmethod
+    def setUpClass(cls):
+        if not (HERE.parent / ".git").exists():
+            raise unittest.SkipTest("not a git checkout")
+        spec = importlib.util.spec_from_file_location("bmcpb", HERE.parent / "scripts" / "build_mcpb.py")
+        cls.b = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.b)
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.path, cls.sha = cls.b.build(Path(cls.tmp.name, "one"))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def test_the_build_is_reproducible_and_the_entry_names_its_hash(self):
+        again, sha = self.b.build(Path(self.tmp.name, "two"))
+        self.assertEqual(sha, self.sha)
+        self.assertEqual(sha, hashlib.sha256(self.path.read_bytes()).hexdigest())
+        entry = json.loads((self.path.parent / "server.json").read_text(encoding="utf-8"))
+        from . import product
+        self.assertEqual(entry["version"], product.VERSION)
+        self.assertLessEqual(len(entry["description"]), 100)     # the registry's limit
+        pkg = entry["packages"][0]
+        self.assertEqual(pkg["fileSha256"], sha)
+        self.assertTrue(pkg["identifier"].endswith("/v%s/%s" % (product.VERSION, self.path.name)))
+        self.assertIn("mcp", pkg["identifier"].rsplit("/", 1)[1])   # the registry asks for "mcp" in the URL
+        self.assertTrue(entry["name"].startswith("io.github.rtmandreyev/"))
+
+    def test_it_carries_the_runtime_without_tests(self):
+        import zipfile
+        names = zipfile.ZipFile(self.path).namelist()
+        self.assertIn("manifest.json", names)
+        self.assertIn("construct_hologram/server.py", names)
+        self.assertEqual([n for n in names if Path(n).name.startswith("test_") or "/testdata/" in n
+                          or "__pycache__" in n], [])
+        m = json.loads(zipfile.ZipFile(self.path).read("manifest.json"))
+        from . import mcp_server, product
+        self.assertEqual((m["name"], m["version"]), (product.NAME, product.VERSION))
+        self.assertEqual([t["name"] for t in m["tools"]], [t["name"] for t in mcp_server.TOOLS])
+
+    def test_its_server_runs_from_the_unpacked_bundle(self):
+        import zipfile
+        with tempfile.TemporaryDirectory() as tmp:
+            ext, cwd = Path(tmp, "ext"), Path(tmp, "elsewhere")
+            cwd.mkdir()
+            zipfile.ZipFile(self.path).extractall(ext)
+            m = json.loads((ext / "manifest.json").read_text(encoding="utf-8"))
+            args = [a.replace("${__dirname}", str(ext)) for a in m["server"]["mcp_config"]["args"]]
+            msgs = [{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}},
+                    {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
+                    {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {
+                        "name": "construct_params_template", "arguments": {"archetype": "book", "variant": "paperback"}}}]
+            r = subprocess.run([sys.executable, "-I"] + args, cwd=cwd, capture_output=True, text=True, timeout=120,
+                               input="".join(json.dumps(x) + "\n" for x in msgs))
+            out = [json.loads(x) for x in r.stdout.splitlines() if x.strip()]
+            self.assertEqual(len(out[1]["result"]["tools"]), len(m["tools"]), r.stderr)
+            self.assertEqual(json.loads(out[2]["result"]["content"][0]["text"])["archetype"], "book")
+
+
 class Versions(unittest.TestCase):
     """The places PUBLISHING.md's release checklist names say the version product.py does."""
 
