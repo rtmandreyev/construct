@@ -1,6 +1,6 @@
 # Construct
 
-https://github.com/user-attachments/assets/622acf5d-5a70-4c30-87f9-eeefbd52ae06
+https://github.com/user-attachments/assets/8c39a196-9910-46a0-9746-4f15965adf15
 
 <p align="center"><sub>Construct in Hermes Agent, in 90 seconds. It works the same way in Claude Code, any MCP client, any OpenAI-compatible endpoint, or the Claude and ChatGPT apps.</sub></p>
 
