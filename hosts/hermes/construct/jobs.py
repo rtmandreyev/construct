@@ -257,6 +257,24 @@ def _stop(targets, grace=12.0):
                 pass
 
 
+def stop_project(project):
+    """Stop the running jobs of one project (it is being deleted: a rebuild still running would write its build into
+    the deleted folder and bring it back)."""
+    targets = []
+    root = runtime.jobs_root()
+    for path in root.iterdir() if root.is_dir() else ():
+        if not runtime.JOB.match(path.name) or not (path / "job.json").is_file():
+            continue
+        try:
+            rec = record(path.name)
+        except (OSError, ValueError):
+            continue
+        if rec.get("project") == project and ended(path.name) is None:
+            targets.append((rec.get("pid"), _procs.get(path.name)))
+    _stop(targets)
+    return len(targets)
+
+
 def stop_all():
     """Stop every job this process started that still runs (the plugin is unloading)."""
     with _lock:

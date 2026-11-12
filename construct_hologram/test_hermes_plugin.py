@@ -996,6 +996,23 @@ class Plugin(unittest.TestCase):
                     self.fail("the child's own child outlived its timeout")
                 time.sleep(0.1)
 
+    def test_deleting_a_project_stops_its_jobs_first(self):
+        # seen on a Windows CI runner: a rebuild still running after Delete wrote its build into the deleted folder
+        rt, jobs = self.mod.runtime, self.mod.jobs
+        real = rt.child_argv
+        rt.child_argv = lambda op, *args: [sys.executable, "-c", "import time; time.sleep(300)"]
+        try:
+            mine = jobs.start("build", "build", project="to-be-deleted", label="a long build")
+            other = jobs.start("build", "build", project="kept", label="another project's build")
+        finally:
+            rt.child_argv = real
+        try:
+            self.assertEqual(jobs.stop_project("to-be-deleted"), 1)
+            self.assertIsNotNone(jobs.ended(mine))
+            self.assertIsNone(jobs.ended(other))
+        finally:
+            jobs.stop_project("kept")
+
     def test_every_shipped_construct_compiles(self):
         for name, files in self.mod.runtime.examples().items():
             code, out, err = self.mod.runtime.run_child("cli", "check", str(files["scene"]), "--json", timeout=300)

@@ -23,6 +23,8 @@
   its connection, an error the fallback did not expect: the browser was never closed and outlived the build that
   opened it. It is now closed whatever stops it, starting or capturing, and the capture goes on in software rendering
   as it was meant to.
+- **Deleting a project stops its jobs first** (the Hermes plugin's Delete). A rebuild still running wrote its build
+  into the deleted folder and brought the project back.
 
 ## 1.3.0 — 2026-11-10
 

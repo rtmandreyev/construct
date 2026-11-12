@@ -236,6 +236,7 @@ def handle(raw_args="", event=None, **kwargs):
             info = json.loads((folder / "project.json").read_text(encoding="utf-8")) if (folder / "project.json").is_file() else {}
             if info.get("archived") is not True:
                 return "%s is not archived: only an archived construct or world can be deleted (archive it first)." % slug
+            jobs.stop_project(slug)   # a rebuild still running would write into the folder and bring it back
             shown = runtime.shown_root() / slug
             for d in (folder, shown):
                 if d.is_dir():
