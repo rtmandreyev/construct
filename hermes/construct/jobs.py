@@ -221,6 +221,8 @@ def cancel(job_id):
 def _running(pid, proc):
     if proc is not None:
         return proc.poll() is None
+    if os.name != "posix":   # on Windows os.kill with any signal ends the process: there is no asking
+        return False
     try:
         os.kill(pid, 0)
     except OSError:
@@ -237,19 +239,22 @@ def _stop(targets, grace=12.0):
         try:
             if os.name == "posix" and pid:
                 os.kill(pid, signal.SIGTERM)
-                asked.append((pid, proc))
             elif proc is not None:
-                proc.terminate()
+                proc.terminate()   # Windows: it ends at once
+            else:
+                continue
+            asked.append((pid, proc))
         except OSError:
             pass
     deadline = time.time() + grace
     for pid, proc in asked:
         while time.time() < deadline and _running(pid, proc):
             time.sleep(0.1)
-        try:
-            os.killpg(pid, signal.SIGKILL)
-        except OSError:
-            pass
+        if os.name == "posix":
+            try:
+                os.killpg(pid, signal.SIGKILL)
+            except OSError:
+                pass
         if proc is not None:
             try:
                 proc.wait(timeout=5)
