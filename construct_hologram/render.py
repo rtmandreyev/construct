@@ -267,6 +267,13 @@ class Browser:
             args[-2:-2] = ["--enable-unsafe-swiftshader", "--use-angle=swiftshader"]
         from . import procenv
         self.proc = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, env=procenv.minimal())
+        try:
+            self._connect(width, height, scale, gpu)
+        except BaseException:   # whatever stops it (a timeout, an interruption), the browser goes with it
+            self.close()
+            raise
+
+    def _connect(self, width, height, scale, gpu):
         port_file = Path(self.profile) / "DevToolsActivePort"
         deadline = time.time() + 60   # a busy machine (a render beside it) can take half a minute to start one
         def port_text():   # the browser may still be writing it: on Windows, a read then is refused, not empty
@@ -277,10 +284,8 @@ class Browser:
         while not port_text():
             if self.proc.poll() is not None:
                 code = self.proc.returncode
-                self.close()
                 raise CaptureError("the browser quit as it started (exit code %d)" % code)
             if time.time() > deadline:
-                self.close()
                 raise CaptureError("the browser did not start its DevTools endpoint in 60 s")
             time.sleep(0.05)
         port = int(port_text().split()[0])
@@ -293,7 +298,6 @@ class Browser:
                 pass
             if page is None:
                 if time.time() > deadline + 60 or self.proc.poll() is not None:
-                    self.close()
                     raise CaptureError("the browser started but did not answer on its DevTools endpoint")
                 time.sleep(0.5)
         # software WebGL draws a large construct's contact sheet in minutes, not seconds: wait for it
@@ -376,9 +380,12 @@ def open_browser(html_probe, width, height, scale, browser=None):
         try:
             b.open(html_probe)
             return b
-        except CaptureError as err:
-            last = err
+        except (CaptureError, OSError) as err:   # OSError: a socket timeout, as when no GPU ever draws the page
+            last = err if isinstance(err, CaptureError) else CaptureError("the browser did not answer: %s" % err)
             b.close()
+        except BaseException:   # anything else: the browser is not left behind
+            b.close()
+            raise
     raise last
 
 

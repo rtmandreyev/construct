@@ -19,6 +19,10 @@
   unloaded job, is asked to stop first and unwinds, so its browser is closed as a browser should be (on macOS, Chrome
   stopped by a signal leaves a copy of the whole app behind in the system's temporary folder); whatever is
   left of its group after 12 seconds is killed.
+- **A capture browser that never answers is closed.** With no GPU, the first try (GPU rendering) could time out on
+  its connection, an error the fallback did not expect: the browser was never closed and outlived the build that
+  opened it. It is now closed whatever stops it, starting or capturing, and the capture goes on in software rendering
+  as it was meant to.
 
 ## 1.3.0 — 2026-11-10
 

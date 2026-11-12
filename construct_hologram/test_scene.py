@@ -3067,6 +3067,27 @@ class Capture(unittest.TestCase):
         self.assertIn("open=1", next(u for u in urls if "view=open" in u))
         self.assertNotIn("open=", next(u for u in urls if "view=hero" in u))
 
+    @unittest.skipUnless(render.find_browser(), "needs a Chromium-family browser")
+    def test_a_browser_that_never_answers_is_closed(self):
+        # seen on a Linux CI runner: with no GPU the probe page timed out on its socket, a TimeoutError that was not a
+        # CaptureError, so the browser was never closed and outlived the build that opened it
+        made, real_init, real_open = [], render.Browser.__init__, render.Browser.open
+
+        def init(self, *a, **k):
+            made.append(self)
+            real_init(self, *a, **k)
+
+        def stalled(self, url):
+            raise TimeoutError("timed out")
+        render.Browser.__init__, render.Browser.open = init, stalled
+        try:
+            with self.assertRaises(render.CaptureError):
+                render.open_browser("about:blank", 320, 200, 1.0)
+        finally:
+            render.Browser.__init__, render.Browser.open = real_init, real_open
+        self.assertEqual(len(made), 2)   # the GPU first, then software rendering
+        self.assertTrue(all(b.proc.poll() is not None for b in made), "a browser is still running")
+
     def test_a_reference_keyed_to_the_scenes_own_view_travels_with_the_packet(self):
         # seen in a live run: `ref-front34=photo.jpg` (a view of the scene) was taken whole as a path, so the photo
         # never reached the packet and its absolute path did
