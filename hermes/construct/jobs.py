@@ -214,36 +214,54 @@ def cancel(job_id):
     rec = record(job_id)
     if ended(job_id) is not None:
         return False
-    _kill(rec.get("pid"), _procs.get(job_id))
+    _stop([(rec.get("pid"), _procs.get(job_id))])
     return True
 
 
-def _kill(pid, proc=None):
+def _running(pid, proc):
+    if proc is not None:
+        return proc.poll() is None
     try:
-        if os.name == "posix" and pid:
-            os.killpg(pid, signal.SIGTERM)   # the job's own group: its browser and encoder go with it
-        elif proc is not None:
-            proc.terminate()
+        os.kill(pid, 0)
     except OSError:
-        pass
+        return False
+    return True
+
+
+def _stop(targets, grace=12.0):
+    """Stop jobs, each (pid, Popen or None): the child first (SIGTERM: it unwinds and closes its browser as a browser
+    should be closed, which on macOS also removes Chrome's copy of itself), then, after `grace`, whatever is left of
+    its own process group: its encoder, or a browser that would not close."""
+    asked = []
+    for pid, proc in targets:
+        try:
+            if os.name == "posix" and pid:
+                os.kill(pid, signal.SIGTERM)
+                asked.append((pid, proc))
+            elif proc is not None:
+                proc.terminate()
+        except OSError:
+            pass
+    deadline = time.time() + grace
+    for pid, proc in asked:
+        while time.time() < deadline and _running(pid, proc):
+            time.sleep(0.1)
+        try:
+            os.killpg(pid, signal.SIGKILL)
+        except OSError:
+            pass
+        if proc is not None:
+            try:
+                proc.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                pass
 
 
 def stop_all():
     """Stop every job this process started that still runs (the plugin is unloading)."""
     with _lock:
         procs = list(_procs.items())
-    for job_id, proc in procs:
-        if proc.poll() is None:
-            _kill(proc.pid, proc)
-    for _, proc in procs:
-        try:
-            proc.wait(timeout=5)
-        except subprocess.TimeoutExpired:
-            if os.name == "posix":
-                try:
-                    os.killpg(proc.pid, signal.SIGKILL)
-                except OSError:
-                    pass
+    _stop([(proc.pid, proc) for _, proc in procs if proc.poll() is None])
 
 
 def recent(limit=12):

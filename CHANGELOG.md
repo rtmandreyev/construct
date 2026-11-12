@@ -13,6 +13,12 @@
   reproducibly, so the hash in the entry holds for the attached file ([PUBLISHING.md](PUBLISHING.md)).
 - **The gallery build makes its model kits as the machine's memory allows** (`scripts/build_site.py`): up to four
   side by side, one per 4 GB. Four at once ran a 7 GB Linux CI runner out of memory.
+- **The Hermes plugin stops a child with what it started.** A still or a thumbnail that outlived its time (a slow
+  machine, software WebGL) was stopped alone, and its headless browser ran on with nothing to close it: a Linux test
+  run left seventeen behind. A short child now runs in its own process group like a job. A child, or a cancelled or
+  unloaded job, is asked to stop first and unwinds, so its browser is closed as a browser should be (on macOS, Chrome
+  stopped by a signal leaves a copy of the whole app behind in the system's temporary folder); whatever is
+  left of its group after 12 seconds is killed.
 
 ## 1.3.0 — 2026-11-10
 

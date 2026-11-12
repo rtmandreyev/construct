@@ -23,6 +23,7 @@ from the user's site or the current folder is imported. Ops:
 import json
 import os
 import shutil
+import signal
 import sys
 import time
 from pathlib import Path
@@ -657,6 +658,8 @@ def job(folder, op, args):
     code, error = 1, None
     try:
         code = run(op, args)
+    except _Stopped:
+        code, error = None, "stopped before it finished (cancelled, the plugin was unloaded or Hermes restarted)"
     except BaseException as exc:   # the job's record must be written however the op ends
         error = "%s: %s" % (type(exc).__name__, exc)
         sys.stderr.write(error + "\n")
@@ -668,13 +671,28 @@ def job(folder, op, args):
     return code
 
 
+class _Stopped(BaseException):
+    """Asked to stop (SIGTERM). A BaseException, so no `except Exception` or `except SystemExit` keeps it: it
+    unwinds the op, and a browser it opened is closed as a browser should be (asked to quit, Chrome on macOS removes
+    the copy of itself it made; stopped by a signal, it leaves a whole app's copy behind)."""
+
+
+def _stop(signum, frame):
+    signal.signal(signal.SIGTERM, signal.SIG_IGN)   # once: a second signal must not cut the browser's close short
+    raise _Stopped("asked to stop")
+
+
 def main(argv):
     sys.path.insert(0, argv[0])
+    signal.signal(signal.SIGTERM, _stop)
     op, rest = argv[1], argv[2:]
     if op == "job":
         return job(rest[0], rest[1], rest[2:])
     try:
         return run(op, rest)
+    except _Stopped:
+        sys.stderr.write("stopped\n")
+        return 143
     except Exception as exc:
         sys.stderr.write("%s: %s\n" % (type(exc).__name__, exc))
         return 1

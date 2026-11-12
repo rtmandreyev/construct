@@ -969,6 +969,33 @@ class Plugin(unittest.TestCase):
         self.assertIn("error", self.call("construct_job", {"job_id": "0" * 12, "wait_seconds": 5}))
         self.assertIn("error", self.call("construct_job", {"job_id": "abc", "wait_seconds": 999}))
 
+    @unittest.skipUnless(os.name == "posix", "process groups are POSIX")
+    def test_a_child_out_of_time_takes_what_it_started_with_it(self):
+        # seen on a Linux CI runner: a still's child stopped at its timeout left its browser running, orphaned
+        rt = self.mod.runtime
+        with tempfile.TemporaryDirectory() as d:
+            pid_file = Path(d, "grandchild")
+            script = ("import subprocess, sys, time; p = subprocess.Popen([sys.executable, '-c', 'import time; "
+                      "time.sleep(300)']); open(%r, 'w').write(str(p.pid)); time.sleep(300)" % str(pid_file))
+            real = rt.child_argv
+            rt.child_argv = lambda op, *args: [sys.executable, "-c", script]
+            try:
+                with self.assertRaises(rt.ChildTimeout):
+                    rt.run_child("still", timeout=3)
+            finally:
+                rt.child_argv = real
+            grandchild = int(pid_file.read_text())
+            deadline = time.time() + 10
+            while True:
+                try:
+                    os.kill(grandchild, 0)
+                except ProcessLookupError:
+                    break
+                if time.time() > deadline:
+                    os.kill(grandchild, 9)
+                    self.fail("the child's own child outlived its timeout")
+                time.sleep(0.1)
+
     def test_every_shipped_construct_compiles(self):
         for name, files in self.mod.runtime.examples().items():
             code, out, err = self.mod.runtime.run_child("cli", "check", str(files["scene"]), "--json", timeout=300)

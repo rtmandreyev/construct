@@ -18,6 +18,7 @@ import re
 import unicodedata
 import secrets
 import shutil
+import signal
 import stat
 import subprocess
 import sys
@@ -468,13 +469,47 @@ def child_argv(op, *args):
 
 
 def run_child(op, *args, timeout=120, cwd=None):
-    """Run a short child to its end: (exit code, stdout, stderr). A child that outlives `timeout` is stopped."""
+    """Run a short child to its end: (exit code, stdout, stderr). A child that outlives `timeout` is stopped, with
+    whatever it started: a still's or a thumbnail's browser would otherwise outlive it (a slow machine, software
+    WebGL), running on with nothing to close it."""
+    group = os.name == "posix"   # its own process group, as a job has: the browser it opens is in it
+    proc = subprocess.Popen(child_argv(op, *args), stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, text=True, encoding="utf-8", errors="replace",
+                            cwd=str(cwd) if cwd else None, env=child_env(), start_new_session=group)
     try:
-        r = subprocess.run(child_argv(op, *args), capture_output=True, text=True, encoding="utf-8", errors="replace",
-                           timeout=timeout, cwd=str(cwd) if cwd else None, env=child_env())
+        out, err = proc.communicate(timeout=timeout)
     except subprocess.TimeoutExpired:
+        _stop_group(proc, group)
         raise ChildTimeout("Construct did not answer within %d s" % timeout)
-    return r.returncode, r.stdout, r.stderr
+    except BaseException:   # interrupted: nothing it started stays behind
+        _stop_group(proc, group)
+        raise
+    return proc.returncode, out, err
+
+
+def _stop_group(proc, group, grace=12.0):
+    """Stop a child and what it started: the child first (SIGTERM: it unwinds and closes its browser as a browser
+    should be closed, which on macOS also removes Chrome's copy of itself), then, after `grace`, whatever is left of
+    its process group."""
+    try:
+        proc.terminate()
+    except OSError:
+        pass
+    try:
+        proc.communicate(timeout=grace)
+    except subprocess.TimeoutExpired:
+        pass
+    try:
+        if group:
+            os.killpg(proc.pid, signal.SIGKILL)
+        else:
+            proc.kill()
+    except OSError:
+        pass
+    try:
+        proc.communicate(timeout=5)
+    except (subprocess.TimeoutExpired, ValueError, OSError):
+        pass
 
 
 _programs = {"at": 0.0, "found": None}
