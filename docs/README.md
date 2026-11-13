@@ -27,6 +27,7 @@ need them.
 | fill in a ready-made template (a book, a CD, a guitar, a bottle, a car) | [ARCHETYPES.md](ARCHETYPES.md) |
 | build a mountain, a route or a planet from real elevation data | [TERRAIN.md](TERRAIN.md) |
 | make a construct assemble across a track of music, for a video or a film | [FILM.md](FILM.md) |
+| see work made with Construct beyond its own gallery | [MADE-WITH-CONSTRUCT.md](MADE-WITH-CONSTRUCT.md) |
 | draw a NetLogo model's run as a construct | [NETLOGO.md](NETLOGO.md) |
 | teach with it, or show it in a museum | [CLASSROOM.md](CLASSROOM.md) |
 | take a construct into Blender, a game engine or the web as a 3D model | [EXPORT.md](EXPORT.md), and the [Blender add-on](../hosts/blender/README.md) |

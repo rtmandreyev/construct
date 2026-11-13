@@ -1,5 +1,7 @@
 # Construct
 
+**Give your agent the thing, not another picture of it.**
+
 https://github.com/user-attachments/assets/8c39a196-9910-46a0-9746-4f15965adf15
 
 <p align="center"><sub>Construct in Hermes Agent, in 90 seconds. It works the same way in Claude Code, any MCP client, any OpenAI-compatible endpoint, or the Claude and ChatGPT apps.</sub></p>
@@ -11,11 +13,11 @@ checks it and builds from it, and the same description always gives the same res
 they make a **world**: a room, a street, a whole game level. Inside a world every construct is still whole, with
 its own parts, sources and joints, so you can move, reuse or open any of it.
 
-**Describe a thing, or show a place. Get a hologram, a 3D model, a print, a kit, or a whole world.** Ask any AI
-agent in plain words and it builds an animated model in lines of light, in the **Measured Light** style. The result
-is a single web page you can open anywhere, and it is honest about what is known. The same construct can also become
-a 3D model with named parts and working joints, a print, a model kit, a CAD file or a film, or one piece of a world
-made with others.
+**Describe a thing, or show a place, and your agent makes one construct of it: an object it can keep working
+with.** Everything else is a use of that one object: an animated model in lines of light, in the **Measured Light**
+style (a single web page you can open anywhere, honest about what is known), a 3D model with named parts and working
+joints, stills and films, a print, a model kit, a CAD file, or one piece of a world made with others. Change a part
+and rebuild, and every one of them follows.
 
 A world can be asked for in plain words, put together from constructs you already have, or made from a single
 picture. Given one picture of a place, it builds the place zero-shot. [Stortorget](examples/worlds/stortorget/),
@@ -69,6 +71,7 @@ assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how 
 | have **software or a documented system** you wish were a physical product | Its documented functions mapped to controls, displays and the parts inside, what the documents fix kept apart from what is designed (one worked example: a software synthesizer as a 61-key instrument) | [Documentation → product](docs/for/documentation-to-product.md) |
 | are a **game developer** | Props in named parts at their real size, with doors and lids on working hinges in Godot, FBX for Unity and Unreal; models of what your game needs instead of stock ones; a whole level from one concept picture ([Rain Harbour](examples/worlds/rain-harbour/): 21 constructs placed 50 times, a hero car, one command to a Godot map) | [Into a game engine](docs/for/game-developers.md) |
 | are a **3D artist** | A construct or a whole world in Blender with its build, joints, metal and finish on sliders, painted from a small material map ([the Villa Savoye](examples/villa-savoye/), 396 parts, and [the Villa lived in](https://rtmandreyev.github.io/construct/worlds/villa-savoye-lived-in/), a world of 13, rendered in Cycles); OBJ in quads to model over; FBX and USD | [Into Blender](docs/for/3d-artists.md) |
+| make **images or a visual identity** | Designed objects that stay the same from every camera and in every medium, instead of being redrawn for each picture, and that can be combined: stills, profile pictures, loops, a film's sets and screens ([Sonastra](docs/MADE-WITH-CONSTRUCT.md#sonastra): the starship ARGUS in Spotify images and Canvas loops, and in a film as a hologram, a technical drawing and a studio model) | [Made with Construct](docs/MADE-WITH-CONSTRUCT.md) |
 | work in **film and motion** | A construct that assembles across your track, pausing, surging and flaring with the music, shimmering with a vocal stem ([three films](https://rtmandreyev.github.io/construct/#films)); keyed reveals in Blender; a world's named views as shots | [Film mode](docs/for/film-and-motion.md) |
 | are an **educator or researcher** | An agent-based model's run drawn as a construct, compared, printed, filmed | [Models come alive](docs/for/educators-and-researchers.md) |
 | work in a **museum or archive** | Reconstructions where every part says how it is known (measured, traced, seen in a photo, designed), sources cited and the critic's verdict kept: [Tompion's clock](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/) from the Royal Collection's record, [Stortorget](examples/worlds/stortorget/) house by house | [Honest reconstructions](docs/for/museums-and-archives.md) |
@@ -97,7 +100,8 @@ Every change with pictures and the commands to try it: **[What's new in 1.3, a w
 - **Sturdier masterpiece rounds**, from two long runs: ties recorded, artwork kept in checkpoints, references
   carried from round to round, more time on request (`rounds extend`), colour judged in the solid view.
 
-## New in 1.2
+<details>
+<summary><b>New in 1.2</b></summary>
 
 Every change with pictures and the commands to try it: **[What's new in 1.2, a walkthrough](docs/NEW-IN-1.2.md)**.
 
@@ -121,7 +125,10 @@ Every change with pictures and the commands to try it: **[What's new in 1.2, a w
 - **Cleaner 3D, bigger constructs.** Solids wound outward, so Blender's normals and booleans agree; up to 1,024
   parts and 48,000 lines; glued joints inside joints for Godot; kit boards that lie flat.
 
-## New in 1.1
+</details>
+
+<details>
+<summary><b>New in 1.1</b></summary>
 
 Every feature with pictures and the commands to try it: **[What's new in 1.1, a walkthrough](docs/NEW-IN-1.1.md)**.
 And one construct taken through all of it, step by step: **[A longcase clock, end to end](docs/END-TO-END.md)**.
@@ -146,6 +153,8 @@ And one construct taken through all of it, step by step: **[A longcase clock, en
   bar, a legend and a *How to read it* panel, in views chosen for the data. Runs side by side for a lesson, a
   printable worksheet, CSV and *Cite this run*; a run as a film or a 3D model in Blender, or as plates you can
   stack. 388 of the Models Library's 445 models record with no edits.
+
+</details>
 
 ## Examples
 
@@ -229,6 +238,24 @@ to the moment they adopted, so you can watch an idea spread and see who it reach
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/"><img src="docs/media/netlogo-viral-marketing.gif" width="100%" alt="The Simple Viral Marketing model running: adoptions spread through the social network on the floor and rise as lines of light, the gold ring marking now, while the counters climb to 500 of 500"></a></p>
 <p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Open the live model</a> to build new networks, run them tick by tick and compare a hundred runs with NetLogo's own. The model is © 2012 Uri Wilensky; this example is under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
+
+## Used beyond the gallery
+
+- **[Sonastra](https://open.spotify.com/artist/2sZD4kxpyZt6QhkxhXZLEt)** is the author's music project, and Construct
+  runs through its visual identity for the album *Unseen/Seen* and its film. The same constructs appear in the
+  Spotify gallery, the Canvas loops and the film's Blender scenes, as holograms, technical drawings and on-screen
+  graphics. The starship ARGUS shows it best: one construct, seen as a gallery image, a hologram over a cabin
+  projector, a general-arrangement drawing on the wall, a studio model on a lab bench and a ship on the film's
+  displays. Its lander docks to it and stays a construct of its own. Every picture is a new camera on the same object,
+  not a new generation. The gallery, the Canvas loops and the film are all on the
+  [Made with Construct](docs/MADE-WITH-CONSTRUCT.md#sonastra) page.
+- **[CUDA Compatibility](https://cudacompat.com)** runs newer CUDA on older NVIDIA GPUs. The project is about GPUs, not
+  Construct, but its site opens on a construct of its GM200 reference card assembling itself, part by part.
+
+<p align="center"><a href="docs/MADE-WITH-CONSTRUCT.md#sonastra"><img src="docs/media/sonastra-argus.jpg" width="100%" alt="Sonastra's starship ARGUS, one construct six ways: a Spotify gallery image in lines of light, its general-arrangement drawing, a hologram over a cabin projector, a studio model on a lab bench, VELA's recon display, and docked with its lander over a planet's rim"></a></p>
+<p align="center"><sub>One ARGUS, six ways. Top: a Spotify gallery image, the general-arrangement drawing and the hologram
+from <i>Void Drift</i>. Below: the studio model in <i>Arrival</i>, the recon display in <i>The Source</i> and the gallery's
+<i>Safe Harbor</i>, docked with its lander.</sub></p>
 
 ## How it works
 
@@ -401,6 +428,7 @@ release. If it fails for you on Linux or Windows, please open an issue.
 | start from a ready-made template (a book, a CD, a guitar, a car) | [Archetypes](docs/ARCHETYPES.md) |
 | make mountains, routes and planets from real elevation data | [Terrain](docs/TERRAIN.md) |
 | turn a construct into a film with music | [Film mode](docs/FILM.md) |
+| see work made with Construct beyond the gallery: a music project's visual identity and film, a research project's site | [Made with Construct](docs/MADE-WITH-CONSTRUCT.md) |
 | export a 3D model or a world, plain or finished from its own material map | [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md) |
 | print it, or make it a model kit | [3D printing and kits](docs/PRINTING.md) |
 | open it in CAD | [FreeCAD and STEP](docs/FREECAD.md) |
