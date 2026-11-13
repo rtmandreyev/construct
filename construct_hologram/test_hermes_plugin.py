@@ -1351,7 +1351,7 @@ class Plugin(unittest.TestCase):
         gate = self.ctx.hooks["pre_tool_call"]
         self.assertIsNone(gate(tool_name="construct_netlogo_run", args={"search": "fire"}))
         ask = gate(tool_name="construct_netlogo_run", args={"model": "Fireflies", "setup": "ca crt 10"})
-        self.assertEqual(ask["action"], "approve")   # confirm_runs is off
+        self.assertEqual(ask["action"], "approve")   # asked for whatever confirm_runs is set to
         self.assertIn("ca crt 10", ask["message"])
         other = gate(tool_name="construct_netlogo_run", args={"model": "Fireflies", "go": "ask turtles [ die ]"})
         self.assertNotEqual(ask["rule_key"], other["rule_key"])   # an approval covers that code only
@@ -1363,8 +1363,11 @@ class Plugin(unittest.TestCase):
             self.ctx.cron = None
 
     def test_a_gallery_download_is_always_approved(self):
-        # a world that places a gallery construct the plugin does not ship downloads it from GitHub: the user is asked
+        # a world that places a gallery construct the plugin does not ship downloads it from GitHub: the user is asked,
+        # even with 'Ask before running programs' turned off
         gate = self.ctx.hooks["pre_tool_call"]
+        self.ctx.config["confirm_runs"] = False
+        self.addCleanup(self.ctx.config.pop, "confirm_runs", None)
         self.assertIsNone(gate(tool_name="construct_world", args={"op": "place", "world": "w", "construct": "vespa-gs150"}))
         ask = gate(tool_name="construct_world", args={"op": "place", "world": "w", "construct": "ferrari-f40"})
         self.assertEqual(ask["action"], "approve")
@@ -1381,10 +1384,14 @@ class Plugin(unittest.TestCase):
 
     def test_approval_gate(self):
         gate = self.ctx.hooks["pre_tool_call"]
-        self.assertIsNone(gate(tool_name="construct_review", args={}))   # off by default
-        self.ctx.config["confirm_runs"] = True
+        ask = gate(tool_name="construct_review", args={})   # on by default: one rule per program
+        self.assertEqual(ask["action"], "approve")
+        self.assertEqual(ask["rule_key"], gate(tool_name="construct_build", args={})["rule_key"])   # both the browser
+        self.ctx.config["confirm_runs"] = False
         try:
             self.mod.runtime.configure(config=self.ctx.get_config)
+            self.assertIsNone(gate(tool_name="construct_review", args={}))   # turned off: no prompt
+            self.ctx.config["confirm_runs"] = True
             self.assertIsNone(gate(tool_name="construct_check", args={}))
             self.assertIsNone(gate(tool_name="terminal", args={}))
             ask = gate(tool_name="construct_film", args={})

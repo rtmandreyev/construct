@@ -365,7 +365,24 @@ Construct is deliberately small. You need:
 - For Hermes, the Construct plugin needs Hermes 0.22 or newer; a world from a picture in masterpiece
   mode needs `delegation.max_spawn_depth: 2` in Hermes's config (an orchestrator subagent per
   construct).
-- Tested on macOS; review capture on Linux and Windows is untested.
+
+### What is tested where
+
+Every change runs the whole test suite (about 550 tests) on macOS, Linux and Windows, with Python 3.10 and the
+current Python, in continuous integration. What needs an outside program is tested where that program is:
+
+| Path | Needs | Tested |
+| --- | --- | --- |
+| Checking, building, exports (glTF, OBJ, 3MF, STL), kits, worlds, the MCP server | Python only | CI on macOS, Linux and Windows |
+| Review stills, gallery images, world captures | a Chromium-family browser | CI on macOS, Linux and Windows (headless Chrome) |
+| Films | a browser and ffmpeg | on macOS, before each release |
+| FreeCAD files and STEP | FreeCAD 1.0+ | on macOS, before each release |
+| The Blender add-on, FBX and USD | Blender 4.2+ | on macOS, before each release |
+| The NetLogo bridge and extension | NetLogo 7 | CI on Linux and Windows with NetLogo 7.0.4 |
+| The Hermes plugin | Hermes 0.22+ | its tests in CI on all three; end to end in Hermes Desktop on macOS |
+
+A path marked "on macOS" has no known platform problem elsewhere; it is just not run on the others before a
+release. If it fails for you on Linux or Windows, please open an issue.
 
 ## Documentation
 

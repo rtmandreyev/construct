@@ -1,5 +1,5 @@
 name: construct
-version: "1.3.1"
+version: "1.3.2"
 description: Hermes researches a thing and writes one exact, checked description of it (its named parts at real sizes, how they fit, open and move, and how each is known, measured or guessed); Construct checks it and builds from it a live hologram in the chat, a 3D model with working joints, a print, a model kit, CAD and STEP, and films; and puts constructs together into worlds (a room, a street, a game level, from a sentence or one picture) that you rearrange by hand. NetLogo runs too.
 author: Artyom Andreyev
 manifest_version: 2
@@ -17,9 +17,9 @@ config_schema:
     description: Where construct projects (scenes, builds, reviews, exports, films) are kept. Blank keeps them in the plugin's own data folder.
   confirm_runs:
     type: bool
-    default: false
+    default: true
     label: Ask before running programs
-    description: Ask before Construct runs a headless browser, ffmpeg, FreeCAD, Blender or NetLogo on this machine. Scheduled runs are refused while this is on.
+    description: Ask before Construct runs a headless browser, ffmpeg, FreeCAD, Blender or NetLogo on this machine (on by default). Hermes asks once for each program, and an "always" answer covers that program from then on. Scheduled runs are refused while this is on; turn it off to schedule them.
   netlogo_folder:
     type: str
     default: ""

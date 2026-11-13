@@ -51,7 +51,8 @@ def programs_for(tool_name, args):
 
 
 def make_gate(ctx):
-    """A pre_tool_call hook: with `confirm_runs` on, a call that runs an outside program asks the user first.
+    """A pre_tool_call hook: with `confirm_runs` on (the default), a call that runs an outside program asks the user
+    first, once per program (Hermes's approval is keyed by program, so "always" covers it from then on).
     In an unattended run (cron) nobody can answer, so the call is refused with a reason instead."""
     def unattended():
         try:
@@ -84,7 +85,7 @@ def make_gate(ctx):
                 return {"action": "approve", "rule_key": "construct:gallery:" + "+".join(fetch),
                         "message": "Construct wants to download %s from its own GitHub release (scene data, JSON only, "
                                    "this version's tag) to place in the world." % ", ".join(fetch)}
-        if not runtime.setting("confirm_runs", False):
+        if not runtime.setting("confirm_runs", True):
             return None
         progs = programs_for(tool_name, args)
         if not progs:

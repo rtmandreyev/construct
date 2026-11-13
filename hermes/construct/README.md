@@ -89,17 +89,23 @@ Plugins**. Requires Hermes 0.22 or newer and Python 3.10+ (Hermes's own). Option
 and never installed: a Chromium-family browser (review images, gallery stills, films), ffmpeg (films), FreeCAD
 (FCStd and STEP), Blender (NetLogo films), NetLogo 7 with its Java (NetLogo runs).
 
+Tested where: the plugin's tests and the whole engine's suite run in CI on macOS, Linux and Windows, with review
+capture in headless Chrome on all three; the NetLogo bridge in CI on Linux and Windows; films, FreeCAD/STEP and
+Blender on macOS before each release; the plugin end to end in Hermes Desktop on macOS. The table is in the
+[main README](https://github.com/rtmandreyev/construct#what-is-tested-where).
+
 Settings (**Settings → Plugins → Construct**): the projects folder (default: the plugin's data folder), *Ask
-before running programs*, which puts each call that runs a browser, ffmpeg, FreeCAD, Blender or NetLogo behind
-Hermes's approval prompt (scheduled runs are then refused rather than left waiting), and the NetLogo folder (blank:
-`CONSTRUCT_NETLOGO` and the usual install places).
+before running programs* (on by default), which puts each call that runs a browser, ffmpeg, FreeCAD, Blender or
+NetLogo behind Hermes's approval prompt, once for each program: answer *always* and that program is not asked about
+again (scheduled runs are refused while it is on, rather than left waiting; turn it off to schedule them), and the
+NetLogo folder (blank: `CONSTRUCT_NETLOGO` and the usual install places).
 
 ## What it touches (disclosures)
 
 - **Local programs:** it runs Construct in a child Python process (Hermes's own interpreter), and, when present,
   a headless Chrome/Chromium (captures only: a private temporary profile, driven over a local debugging port),
-  ffmpeg, FreeCAD and Blender. Nothing already on the machine is changed. No approval prompt unless *Ask before
-  running programs* is on, except for NetLogo code the agent wrote or a model from outside the installed Models
+  ffmpeg, FreeCAD and Blender. Nothing already on the machine is changed. Each program is asked about once while *Ask before
+  running programs* is on (the default); with it off, only NetLogo code the agent wrote or a model from outside the installed Models
   Library, which Hermes always asks you to approve (see NetLogo below).
 - **Which programs, and what they are given:** a program's path comes only from the plugin's settings, a
   `CONSTRUCT_*` variable or the PATH, never from a tool's arguments (`--freecad` and `--blender` are refused). The

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.2 — 2026-11-13
+
+- **The Hermes plugin asks before it runs a program.** *Ask before running programs* is now on by default: before
+  Construct first runs a headless browser, ffmpeg, FreeCAD, Blender or NetLogo, Hermes asks, once for each program,
+  and an *always* answer covers that program from then on. Scheduled runs are refused while it is on (nobody can
+  answer); turn it off in **Settings → Plugins → Construct** to schedule them, as before 1.3.2.
+- **What is tested where.** The README has a table of each path, the program it needs, and where it is tested: the
+  whole suite in CI on macOS, Linux and Windows (review capture in headless Chrome on all three), NetLogo in CI on
+  Linux and Windows, films, FreeCAD/STEP and Blender on macOS before each release. It replaces "tested on macOS".
+
 ## 1.3.1 — 2026-11-12
 
 - **The MCP server's print fits its answer.** In 1.3.0, `construct_print` with its defaults refused the starter
